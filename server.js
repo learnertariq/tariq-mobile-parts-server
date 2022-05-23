@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 require("express-async-errors");
 
 const rootRouter = require("./routes/root");
-// const tasksRouter = require("./routes/tasks");
+const reviewsRouter = require("./routes/reviews");
 const loginRouter = require("./routes/login");
 
 // import middlewares
@@ -35,6 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 // routes
 app.use("/", rootRouter);
 app.use("/login", loginRouter);
+app.use("/reviews", reviewsRouter);
 app.use(errorsMiddleware);
 
 const port = process.env.PORT || 5000;
