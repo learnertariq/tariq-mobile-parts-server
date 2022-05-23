@@ -10,6 +10,13 @@ router.get("/", async (req, res) => {
   res.send(tasks);
 });
 
+router.get("/:id", auth, async (req, res) => {
+  const id = req.params.id;
+  const task = await Tool.findById(mongoose.Types.ObjectId(id));
+
+  res.send(task);
+});
+
 // router.post("/", auth, async (req, res) => {
 //   const bodyCopy = req.body;
 //   console.log(req.user);
