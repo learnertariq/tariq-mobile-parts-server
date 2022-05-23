@@ -9,6 +9,7 @@ router.get("/", auth, async (req, res) => {
 
   const order = await Order.find(queryObj);
   const tool = await Tool.findById(mongoose.Types.ObjectId(order.tool));
+  console.log(order);
   res.send(order);
 });
 
@@ -20,9 +21,8 @@ router.get("/:id", auth, async (req, res) => {
 });
 
 router.post("/", auth, async (req, res) => {
-  console.log(req.body);
   const bodyCopy = req.body;
-  const tool = await Tool.findById(mongoose.Types.ObjectId(bodyCopy.tool));
+  const tool = await Tool.findById(mongoose.Types.ObjectId(bodyCopy.toolId));
   const total = tool.price * parseInt(bodyCopy.quantity);
 
   const order = new Order({
@@ -30,6 +30,7 @@ router.post("/", auth, async (req, res) => {
     total,
   });
 
+  console.log(order);
   await order.save();
   res.send(order);
 });
@@ -43,10 +44,10 @@ router.post("/", auth, async (req, res) => {
 //   res.send(order);
 // });
 
-// router.delete("/:id", auth, async (req, res) => {
-//   const id = req.params.id;
-//   const order = await Order.findByIdAndDelete(mongoose.Types.ObjectId(id));
-//   res.send(order);
-// });
+router.delete("/:id", auth, async (req, res) => {
+  const id = req.params.id;
+  const order = await Order.findByIdAndDelete(mongoose.Types.ObjectId(id));
+  res.send(order);
+});
 
 module.exports = router;

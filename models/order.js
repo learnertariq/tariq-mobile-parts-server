@@ -7,7 +7,6 @@ const orderSchema = new mongoose.Schema({
     minLength: 0,
     maxLength: 100,
   },
-
   address: {
     type: String,
     minLength: 0,
@@ -18,8 +17,14 @@ const orderSchema = new mongoose.Schema({
     minLength: 0,
     maxLength: 100,
   },
-  tool: {
-    type: mongoose.Schema.Types.ObjectId,
+  toolName: {
+    type: String,
+    required: true,
+    minLength: 0,
+    maxLength: 100,
+  },
+  toolId: {
+    type: mongoose.Types.ObjectId,
     required: true,
   },
   quantity: {
