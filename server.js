@@ -6,6 +6,7 @@ const rootRouter = require("./routes/root");
 const loginRouter = require("./routes/login");
 const reviewsRouter = require("./routes/reviews");
 const toolsRouter = require("./routes/tools");
+const ordersRouter = require("./routes/orders");
 
 // import middlewares
 const errorsMiddleware = require("./middlewares/errors");
@@ -38,6 +39,7 @@ app.use("/", rootRouter);
 app.use("/login", loginRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/tools", toolsRouter);
+app.use("/orders", ordersRouter);
 app.use(errorsMiddleware);
 
 const port = process.env.PORT || 5000;

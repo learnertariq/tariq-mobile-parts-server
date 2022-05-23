@@ -1,45 +1,45 @@
 const mongoose = require("mongoose");
 
-const toolSchema = new mongoose.Schema({
-  name: {
+const orderSchema = new mongoose.Schema({
+  email: {
     type: String,
     required: true,
     minLength: 0,
     maxLength: 100,
   },
 
-  img: {
+  address: {
     type: String,
-    required: true,
     minLength: 0,
-    maxLength: 1000,
+    maxLength: 100,
   },
-  desc: {
+  phone: {
     type: String,
-    required: true,
     minLength: 0,
-    maxLength: 1000,
+    maxLength: 100,
   },
-  minOrderQuantity: {
+  tool: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  quantity: {
     type: Number,
     required: true,
     minLength: 0,
     maxLength: 100000,
   },
-  availableQuantity: {
+  total: {
     type: Number,
     required: true,
     minLength: 0,
-    maxLength: 100000000000,
+    maxLength: 100000000000000,
   },
-  price: {
-    type: Number,
-    required: true,
-    minLength: 0,
-    maxLength: 10000000000000,
+  paid: {
+    type: Boolean,
+    default: false,
   },
 });
 
 module.exports = {
-  Tool: mongoose.model("Tool", toolSchema),
+  Order: mongoose.model("Order", orderSchema),
 };
