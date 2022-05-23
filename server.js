@@ -8,6 +8,7 @@ const rootRouter = require("./routes/root");
 
 // import middlewares
 const errorsMiddleware = require("./middlewares/errors");
+const accessHeaders = require("./middlewares/headers");
 
 const app = express();
 if (app.get("env") !== "production") {
@@ -16,7 +17,7 @@ if (app.get("env") !== "production") {
 
 // Connecting to database
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.1oxkl.mongodb.net/?retryWrites=true&w=majority`,
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.1oxkl.mongodb.net/parts-db?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -26,6 +27,8 @@ const db = mongoose.connection;
 db.on("error", (err) => console.error(err));
 db.once("open", () => console.log("connected to mongoose"));
 
+// middlewares
+app.use(accessHeaders);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
