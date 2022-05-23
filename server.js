@@ -6,8 +6,8 @@ require("express-async-errors");
 // const tasksRouter = require("./routes/tasks");
 // const loginRouter = require("./routes/login");
 
-// // import middlewares
-// const errorsMiddleware = require("./middlewares/errors");
+// import middlewares
+const errorsMiddleware = require("./middlewares/errors");
 
 const app = express();
 if (app.get("env") !== "production") {
@@ -28,6 +28,7 @@ db.once("open", () => console.log("connected to mongoose"));
 
 ///
 
+app.use(errorsMiddleware);
 ///
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`server is listening on port ${port}`));
