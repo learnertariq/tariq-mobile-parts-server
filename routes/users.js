@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+const admin = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
 const { User } = require("../models/user");
 
-router.get("/", auth, async (req, res) => {
+router.get("/", [auth, admin], async (req, res) => {
   const users = await User.find({});
   res.send(users);
 });
@@ -14,6 +15,29 @@ router.get("/", auth, async (req, res) => {
 
 //   res.send(user);
 // });
+
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findOne({ email: req.user.email });
+  if (!user) return res.send("Not found in the database");
+
+  res.send(user);
+});
+
+router.patch("/me", auth, async (req, res) => {
+  const user = await User.findOne({ email: req.user.email });
+  if (!user) return res.send("Not found in the database");
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, req.body);
+  res.send(updatedUser);
+});
+
+router.patch("/admin", [auth, admin], async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.send("Not found in the database");
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, req.body);
+  res.send(updatedUser);
+});
 
 router.post("/", auth, async (req, res) => {
   const user = await User.findOne({ email: req.user.email });
