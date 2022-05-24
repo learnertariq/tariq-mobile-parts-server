@@ -34,7 +34,24 @@ app.use(accessHeaders);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 // routes
+app.post("/create-payment-intent", async (req, res) => {
+  const { price } = req.body;
+  const amount = price * 100;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount,
+    currency: "usd",
+    payment_method_types: ["card"],
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
+
 app.use("/", rootRouter);
 app.use("/login", loginRouter);
 app.use("/reviews", reviewsRouter);
