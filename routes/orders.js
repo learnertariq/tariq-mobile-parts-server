@@ -34,7 +34,9 @@ router.post("/", auth, async (req, res) => {
 });
 
 router.patch("/:id", auth, async (req, res) => {
+  console.log(req.body);
   const id = req.params.id;
+  console.log(id, typeof id);
   const order = await Order.findByIdAndUpdate(
     mongoose.Types.ObjectId(id),
     req.body

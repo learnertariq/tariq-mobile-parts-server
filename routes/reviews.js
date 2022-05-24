@@ -6,37 +6,29 @@ const { Review } = require("../models/review");
 router.get("/", async (req, res) => {
   const queryObj = {};
 
-  const tasks = await Review.find(queryObj);
-  res.send(tasks);
+  const reviews = await Review.find(queryObj);
+  res.send(reviews);
 });
 
-// router.post("/", auth, async (req, res) => {
-//   const bodyCopy = req.body;
-
-//   const task = new Review({
-//     name: bodyCopy.name,
-//     email: req.user?.email,
-//     desc: bodyCopy.desc,
-//     complete: bodyCopy.complete || false,
-//   });
-
-//   await task.save();
-//   res.send(task);
-// });
+router.post("/", auth, async (req, res) => {
+  const review = new Review(req.body);
+  await review.save();
+  res.send(review);
+});
 
 // router.patch("/:id", auth, async (req, res) => {
 //   const id = req.params.id;
-//   const task = await Review.findByIdAndUpdate(
+//   const review = await Review.findByIdAndUpdate(
 //     mongoose.Types.ObjectId(id),
 //     req.body
 //   );
-//   res.send(task);
+//   res.send(review);
 // });
 
 // router.delete("/:id", auth, async (req, res) => {
 //   const id = req.params.id;
-//   const task = await Review.findByIdAndDelete(mongoose.Types.ObjectId(id));
-//   res.send(task);
+//   const review = await Review.findByIdAndDelete(mongoose.Types.ObjectId(id));
+//   res.send(review);
 // });
 
 module.exports = router;

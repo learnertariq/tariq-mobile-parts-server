@@ -43,6 +43,11 @@ const orderSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  txId: {
+    type: String,
+    minLength: 0,
+    maxLength: 100,
+  },
 });
 
 module.exports = {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const reviewSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -13,27 +13,32 @@ const reviewSchema = new mongoose.Schema({
     minLength: 0,
     maxLength: 100,
   },
-
-  img: {
+  education: {
     type: String,
-    required: true,
     minLength: 0,
-    maxLength: 1000,
+    maxLength: 200,
   },
-  text: {
+  location: {
     type: String,
-    required: true,
     minLength: 0,
-    maxLength: 1000,
+    maxLength: 100,
   },
-  rating: {
-    type: Number,
-    required: true,
+  phone: {
+    type: String,
     minLength: 0,
-    maxLength: 6,
+    maxLength: 100,
+  },
+  linkedIn: {
+    type: String,
+    minLength: 0,
+    maxLength: 100,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
   },
 });
 
 module.exports = {
-  Review: mongoose.model("Review", reviewSchema),
+  User: mongoose.model("User", userSchema),
 };
