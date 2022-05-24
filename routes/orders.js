@@ -9,7 +9,6 @@ router.get("/", auth, async (req, res) => {
 
   const order = await Order.find(queryObj);
   const tool = await Tool.findById(mongoose.Types.ObjectId(order.tool));
-  console.log(order);
   res.send(order);
 });
 
@@ -30,7 +29,6 @@ router.post("/", auth, async (req, res) => {
     total,
   });
 
-  console.log(order);
   await order.save();
   res.send(order);
 });

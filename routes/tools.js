@@ -19,7 +19,6 @@ router.get("/:id", auth, async (req, res) => {
 
 // router.post("/", auth, async (req, res) => {
 //   const bodyCopy = req.body;
-//   console.log(req.user);
 
 //   const tool = new Tool({
 //     name: bodyCopy.name,

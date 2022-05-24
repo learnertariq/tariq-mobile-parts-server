@@ -12,7 +12,6 @@ router.get("/", async (req, res) => {
 
 // router.post("/", auth, async (req, res) => {
 //   const bodyCopy = req.body;
-//   console.log(req.user);
 
 //   const task = new Review({
 //     name: bodyCopy.name,
