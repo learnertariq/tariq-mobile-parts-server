@@ -33,14 +33,14 @@ router.post("/", auth, async (req, res) => {
   res.send(order);
 });
 
-// router.patch("/:id", auth, async (req, res) => {
-//   const id = req.params.id;
-//   const order = await Order.findByIdAndUpdate(
-//     mongoose.Types.ObjectId(id),
-//     req.body
-//   );
-//   res.send(order);
-// });
+router.patch("/:id", auth, async (req, res) => {
+  const id = req.params.id;
+  const order = await Order.findByIdAndUpdate(
+    mongoose.Types.ObjectId(id),
+    req.body
+  );
+  res.send(order);
+});
 
 router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
