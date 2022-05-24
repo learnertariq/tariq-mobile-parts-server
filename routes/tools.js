@@ -17,19 +17,12 @@ router.get("/:id", auth, async (req, res) => {
   res.send(tool);
 });
 
-// router.post("/", auth, async (req, res) => {
-//   const bodyCopy = req.body;
+router.post("/", auth, async (req, res) => {
+  const tool = new Tool(req.body);
 
-//   const tool = new Tool({
-//     name: bodyCopy.name,
-//     email: req.user?.email,
-//     desc: bodyCopy.desc,
-//     complete: bodyCopy.complete || false,
-//   });
-
-//   await tool.save();
-//   res.send(tool);
-// });
+  await tool.save();
+  res.send(tool);
+});
 
 // router.patch("/:id", auth, async (req, res) => {
 //   const id = req.params.id;
