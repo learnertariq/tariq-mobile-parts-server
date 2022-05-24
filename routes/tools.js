@@ -6,8 +6,8 @@ const { Tool } = require("../models/tool");
 router.get("/", async (req, res) => {
   const queryObj = {};
 
-  const tool = await Tool.find(queryObj);
-  res.send(tool);
+  const tools = await Tool.find(queryObj).sort({ _id: -1 }).exec();
+  res.send(tools);
 });
 
 router.get("/:id", auth, async (req, res) => {

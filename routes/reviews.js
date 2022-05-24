@@ -6,7 +6,7 @@ const { Review } = require("../models/review");
 router.get("/", async (req, res) => {
   const queryObj = {};
 
-  const reviews = await Review.find(queryObj);
+  const reviews = await Review.find(queryObj).sort({ _id: -1 }).exec();
   res.send(reviews);
 });
 
