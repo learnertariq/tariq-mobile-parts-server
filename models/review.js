@@ -14,12 +14,6 @@ const reviewSchema = new mongoose.Schema({
     maxLength: 100,
   },
 
-  img: {
-    type: String,
-    required: true,
-    minLength: 0,
-    maxLength: 1000,
-  },
   text: {
     type: String,
     required: true,
