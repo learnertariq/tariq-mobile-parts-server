@@ -48,6 +48,10 @@ const orderSchema = new mongoose.Schema({
     minLength: 0,
     maxLength: 100,
   },
+  shipped: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = {

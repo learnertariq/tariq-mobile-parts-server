@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+const admin = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
 const { Tool } = require("../models/tool");
 
@@ -33,7 +34,7 @@ router.post("/", auth, async (req, res) => {
 //   res.send(tool);
 // });
 
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
   const id = req.params.id;
   const tool = await Tool.findByIdAndDelete(mongoose.Types.ObjectId(id));
   res.send(tool);

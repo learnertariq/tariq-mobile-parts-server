@@ -1,15 +1,20 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const auth = require("../middlewares/auth");
+const admin = require("../middlewares/admin");
 const { Order } = require("../models/order");
 const { Tool } = require("../models/tool");
 
 router.get("/", auth, async (req, res) => {
   const queryObj = { email: req.user.email };
 
-  const order = await Order.find(queryObj);
-  const tool = await Tool.findById(mongoose.Types.ObjectId(order.tool));
-  res.send(order);
+  const orders = await Order.find(queryObj);
+  res.send(orders);
+});
+
+router.get("/admin", [auth, admin], async (req, res) => {
+  const orders = await Order.find({});
+  res.send(orders);
 });
 
 router.get("/:id", auth, async (req, res) => {
@@ -50,8 +55,11 @@ router.delete("/:id", auth, async (req, res) => {
   const order = await Order.findByIdAndDelete(mongoose.Types.ObjectId(id));
   const tool = await Tool.findById(order.toolId);
 
-  tool.availableQuantity = tool.availableQuantity + order.quantity;
-  await tool.save();
+  if (tool) {
+    tool.availableQuantity = tool.availableQuantity + order.quantity;
+    await tool.save();
+  }
+
   res.send(order);
 });
 
