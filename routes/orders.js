@@ -22,6 +22,7 @@ router.get("/:id", auth, async (req, res) => {
 router.post("/", auth, async (req, res) => {
   const bodyCopy = req.body;
   const tool = await Tool.findById(mongoose.Types.ObjectId(bodyCopy.toolId));
+  tool.availableQuantity = tool.availableQuantity - bodyCopy.quantity;
   const total = tool.price * parseInt(bodyCopy.quantity);
 
   const order = new Order({
@@ -30,13 +31,12 @@ router.post("/", auth, async (req, res) => {
   });
 
   await order.save();
+  await tool.save();
   res.send(order);
 });
 
 router.patch("/:id", auth, async (req, res) => {
-  console.log(req.body);
   const id = req.params.id;
-  console.log(id, typeof id);
   const order = await Order.findByIdAndUpdate(
     mongoose.Types.ObjectId(id),
     req.body
@@ -46,7 +46,12 @@ router.patch("/:id", auth, async (req, res) => {
 
 router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
+  // const order = await Order.findByIdAndDelete(mongoose.Types.ObjectId(id));
   const order = await Order.findByIdAndDelete(mongoose.Types.ObjectId(id));
+  const tool = await Tool.findById(order.toolId);
+
+  tool.availableQuantity = tool.availableQuantity + order.quantity;
+  await tool.save();
   res.send(order);
 });
 
